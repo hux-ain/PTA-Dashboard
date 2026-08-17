@@ -16,7 +16,7 @@
         </a>
 
         {{-- Show data tables only for Admin and Employee roles, NOT for super_admin --}}
-        @if(auth()->check() && in_array(auth()->user()->role, ['Admin', 'Employee']))
+        @if(auth()->check() && in_array(auth()->user()->role, ['Admin', 'Employee', 'super_admin']))
             <a href="{{ route('subscribers.index') }}" class="nav-link {{ request()->is('subscribers*') ? 'active' : '' }}" data-title="Subscribers CIR">
                 <i class="fa-solid fa-users"></i> <span>Subscribers CIR</span>
             </a>
@@ -51,14 +51,14 @@
         @endif
 
         {{-- Data Import - Only for Admin and super_admin --}}
-        @if(auth()->check() && in_array(auth()->user()->role, ['Admin', 'super_admin']))
+        @if(auth()->check() && auth()->user()->role === 'super_admin')
             <a href="{{ route('imports.index') }}" class="nav-link {{ request()->is('imports*') ? 'active' : '' }}" data-title="Data Import">
                 <i class="fa-solid fa-file-import"></i> <span>Data Import</span>
             </a>
         @endif
 
         {{-- User Management - Only for Admin and super_admin --}}
-        @if(auth()->check() && in_array(auth()->user()->role, ['Admin', 'super_admin']))
+        @if(auth()->check() && auth()->user()->role === 'super_admin')
             <hr class="my-2" style="opacity: 0.3;">
             <a href="{{ route('users.index') }}" class="nav-link {{ request()->is('users*') ? 'active' : '' }}" data-title="User Management">
                 <i class="fa-solid fa-users-gear"></i> <span>User Management</span>

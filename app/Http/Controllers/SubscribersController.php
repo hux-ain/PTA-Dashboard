@@ -12,7 +12,7 @@ class SubscribersController extends Controller
     {
         $this->middleware('auth');
         $this->middleware(function ($request, $next) {
-            if (!in_array(auth()->user()->role, ['Admin', 'Employee'])) {
+            if (!in_array(auth()->user()->role, ['Admin', 'Employee', 'super_admin'])) {
                 abort(403, 'Unauthorized - This section is only for Admin and Employee roles');
             }
             return $next($request);
@@ -96,3 +96,4 @@ class SubscribersController extends Controller
             return back()->withErrors(['error' => 'Failed to add subscriber: ' . $e->getMessage()]);
         }
     }
+}

@@ -11,7 +11,7 @@ class ComplaintsController extends Controller
     {
         $this->middleware('auth');
         $this->middleware(function ($request, $next) {
-            if (!in_array(auth()->user()->role, ['Admin', 'Employee'])) {
+            if (!in_array(auth()->user()->role, ['Admin', 'Employee', 'super_admin'])) {
                 abort(403, 'Unauthorized - This section is only for Admin and Employee roles');
             }
             return $next($request);

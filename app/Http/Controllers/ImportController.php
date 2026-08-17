@@ -29,7 +29,7 @@ class ImportController extends Controller
     {
         $this->middleware('auth');
         $this->middleware(function ($request, $next) {
-            if (!in_array(auth()->user()->role, ['Admin', 'super_admin'])) {
+            if (auth()->user()->role !== 'super_admin') {
                 abort(403, 'Unauthorized - Only Admin and Super Admin can access Data Import');
             }
             return $next($request);

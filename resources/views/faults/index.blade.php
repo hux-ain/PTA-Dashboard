@@ -89,9 +89,11 @@
                 <a href="{{ route('faults.create') }}" class="btn btn-sm btn-primary fw-semibold">
                     <i class="fa-solid fa-plus me-1"></i> Add Fault
                 </a>
-                <a href="{{ route('imports.index') }}" class="btn btn-sm fw-semibold" style="background:var(--accent);color:#1f2227;border:none;">
-                    <i class="fa-solid fa-file-import me-1"></i> Import Data
-                </a>
+                @if(auth()->user()->role === 'super_admin')
+                    <a href="{{ route('imports.index') }}" class="btn btn-sm fw-semibold" style="background:var(--accent);color:#1f2227;border:none;">
+                        <i class="fa-solid fa-file-import me-1"></i> Import Data
+                    </a>
+                @endif
             </div>
         </div>
 
