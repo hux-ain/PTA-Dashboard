@@ -110,7 +110,9 @@
                 <div style="min-width:200px;">
                     <label class="form-label small fw-semibold text-muted mb-1">Package</label>
                     <select name="package" class="form-select">
-                        <option value="">All Packages</option>
+                        
+                    
+                    <option value="">All Packages</option>
                         @foreach($packages as $p)
                         <option value="{{ $p }}" {{ $filterPackage == $p ? 'selected' : '' }}>{{ $p }}</option>
                         @endforeach
