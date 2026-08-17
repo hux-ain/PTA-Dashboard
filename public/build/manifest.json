@@ -1,0 +1,168 @@
+{
+  "_AuthenticatedLayout-B508-uQX.js": {
+    "file": "assets/AuthenticatedLayout-B508-uQX.js",
+    "name": "AuthenticatedLayout",
+    "imports": [
+      "resources/js/app.jsx"
+    ]
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-U7MIXPzb.css",
+    "src": "resources/css/app.css",
+    "isEntry": true,
+    "name": "app",
+    "names": [
+      "app.css"
+    ]
+  },
+  "resources/js/Pages/Account/ChangePassword.jsx": {
+    "file": "assets/ChangePassword-B27Gxz_9.js",
+    "name": "ChangePassword",
+    "src": "resources/js/Pages/Account/ChangePassword.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_AuthenticatedLayout-B508-uQX.js"
+    ]
+  },
+  "resources/js/Pages/Account/Show.jsx": {
+    "file": "assets/Show-DFj-Fmpw.js",
+    "name": "Show",
+    "src": "resources/js/Pages/Account/Show.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_AuthenticatedLayout-B508-uQX.js"
+    ]
+  },
+  "resources/js/Pages/Activity/Index.jsx": {
+    "file": "assets/Index-B06P_4g_.js",
+    "name": "Index",
+    "src": "resources/js/Pages/Activity/Index.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_AuthenticatedLayout-B508-uQX.js"
+    ]
+  },
+  "resources/js/Pages/Auth/Login.jsx": {
+    "file": "assets/Login-BWkXmcas.js",
+    "name": "Login",
+    "src": "resources/js/Pages/Auth/Login.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx"
+    ]
+  },
+  "resources/js/Pages/Customers/Create.jsx": {
+    "file": "assets/Create-DJyruihx.js",
+    "name": "Create",
+    "src": "resources/js/Pages/Customers/Create.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_AuthenticatedLayout-B508-uQX.js"
+    ]
+  },
+  "resources/js/Pages/Customers/Index.jsx": {
+    "file": "assets/Index-CTexGxYK.js",
+    "name": "Index",
+    "src": "resources/js/Pages/Customers/Index.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_AuthenticatedLayout-B508-uQX.js"
+    ]
+  },
+  "resources/js/Pages/Home.jsx": {
+    "file": "assets/Home-BuJNidza.js",
+    "name": "Home",
+    "src": "resources/js/Pages/Home.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_AuthenticatedLayout-B508-uQX.js"
+    ]
+  },
+  "resources/js/Pages/Inventories/Index.jsx": {
+    "file": "assets/Index-DcRisPuN.js",
+    "name": "Index",
+    "src": "resources/js/Pages/Inventories/Index.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_AuthenticatedLayout-B508-uQX.js"
+    ]
+  },
+  "resources/js/Pages/Pops/Index.jsx": {
+    "file": "assets/Index-DwWw6gal.js",
+    "name": "Index",
+    "src": "resources/js/Pages/Pops/Index.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_AuthenticatedLayout-B508-uQX.js"
+    ]
+  },
+  "resources/js/Pages/Surveys/Index.jsx": {
+    "file": "assets/Index-C9SSAJil.js",
+    "name": "Index",
+    "src": "resources/js/Pages/Surveys/Index.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_AuthenticatedLayout-B508-uQX.js"
+    ]
+  },
+  "resources/js/Pages/Tickets/Index.jsx": {
+    "file": "assets/Index-C11L3ke9.js",
+    "name": "Index",
+    "src": "resources/js/Pages/Tickets/Index.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_AuthenticatedLayout-B508-uQX.js"
+    ]
+  },
+  "resources/js/Pages/Users/Index.jsx": {
+    "file": "assets/Index-D-sjkToC.js",
+    "name": "Index",
+    "src": "resources/js/Pages/Users/Index.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_AuthenticatedLayout-B508-uQX.js"
+    ]
+  },
+  "resources/js/Pages/Vendors/Index.jsx": {
+    "file": "assets/Index-xw2yjod5.js",
+    "name": "Index",
+    "src": "resources/js/Pages/Vendors/Index.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_AuthenticatedLayout-B508-uQX.js"
+    ]
+  },
+  "resources/js/app.jsx": {
+    "file": "assets/app-B9f0krcN.js",
+    "name": "app",
+    "src": "resources/js/app.jsx",
+    "isEntry": true,
+    "dynamicImports": [
+      "resources/js/Pages/Account/ChangePassword.jsx",
+      "resources/js/Pages/Account/Show.jsx",
+      "resources/js/Pages/Activity/Index.jsx",
+      "resources/js/Pages/Auth/Login.jsx",
+      "resources/js/Pages/Customers/Create.jsx",
+      "resources/js/Pages/Customers/Index.jsx",
+      "resources/js/Pages/Home.jsx",
+      "resources/js/Pages/Inventories/Index.jsx",
+      "resources/js/Pages/Pops/Index.jsx",
+      "resources/js/Pages/Surveys/Index.jsx",
+      "resources/js/Pages/Tickets/Index.jsx",
+      "resources/js/Pages/Users/Index.jsx",
+      "resources/js/Pages/Vendors/Index.jsx"
+    ]
+  }
+}
