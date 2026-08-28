@@ -42,7 +42,18 @@ if ! command -v "$COMPOSER_BIN" >/dev/null 2>&1; then
 fi
 
 if ! command -v "$NPM_BIN" >/dev/null 2>&1; then
-    echo "Error: npm was not found. Set NPM_BIN to the npm executable." >&2
+    if command -v apt-get >/dev/null 2>&1; then
+        echo "npm was not found. Installing Node.js and npm..."
+        apt-get update
+        apt-get install -y nodejs npm
+    else
+        echo "Error: npm was not found and apt-get is unavailable. Install Node.js/npm or set NPM_BIN." >&2
+        exit 1
+    fi
+fi
+
+if ! command -v "$NPM_BIN" >/dev/null 2>&1; then
+    echo "Error: npm installation failed. Set NPM_BIN to the npm executable." >&2
     exit 1
 fi
 
@@ -57,7 +68,11 @@ echo "Running database migrations..."
 "$PHP_BIN" artisan migrate --force
 
 echo "Installing frontend dependencies and building assets..."
-"$NPM_BIN" install --no-audit --no-fund
+if [[ -f package-lock.json ]]; then
+    "$NPM_BIN" ci --no-audit --no-fund
+else
+    "$NPM_BIN" install --no-audit --no-fund
+fi
 "$NPM_BIN" run build
 
 echo "Linking public storage..."
