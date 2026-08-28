@@ -3,11 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\DarkCoreLink;
+use App\Http\Controllers\Concerns\ManagesCrud;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class DarkCoreController extends Controller
 {
+    use ManagesCrud;
+    protected string $crudModel = DarkCoreLink::class;
+    protected string $crudView = 'darkcore.create';
+    protected string $crudRoute = 'darkcore.index';
+    protected string $crudLabel = 'Dark Core Link';
+    protected array $crudRules = ['name' => 'required|string|max:255', 'point_a' => 'required|string|max:100', 'point_b' => 'required|string|max:100', 'service_provider_name' => 'required|string|max:100', 'service_type' => 'nullable|string|max:100', 'own_or_lease' => 'nullable|string|max:50'];
     public function __construct()
     {
         $this->middleware('auth');

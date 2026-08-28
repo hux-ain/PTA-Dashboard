@@ -153,6 +153,7 @@
                         <th class="px-4 py-3 text-uppercase small text-muted">Aging</th>
                         <th class="px-4 py-3 text-uppercase small text-muted">Status</th>
                         <th class="px-4 py-3 text-uppercase small text-muted">RCA</th>
+                        <th class="px-4 py-3 text-uppercase small text-muted">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -172,6 +173,7 @@
                             <span class="badge bg-success rounded-pill px-3 py-1">{{ $f->status }}</span>
                         </td>
                         <td class="px-4 py-2 small text-muted" style="max-width:200px;">{{ \Illuminate\Support\Str::limit($f->rca ?? '—', 45) }}</td>
+                        <td class="px-4 py-2 small">@include('components.crud-actions', ['record' => $f, 'routePrefix' => 'faultscleared'])</td>
                     </tr>
                     @empty
                     <tr>

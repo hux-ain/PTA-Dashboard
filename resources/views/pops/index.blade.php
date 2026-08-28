@@ -141,6 +141,7 @@
                         <th class="px-4 py-3 text-uppercase small text-muted">Own / Co-located</th>
                         <th class="px-4 py-3 text-uppercase small text-muted">GPS Coordinates</th>
                         <th class="px-4 py-3 text-uppercase small text-muted">Address</th>
+                        <th class="px-4 py-3 text-uppercase small text-muted">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -160,6 +161,7 @@
                         </td>
                         <td class="px-4 py-2 small text-primary">{{ $p->gps_coordinates }}</td>
                         <td class="px-4 py-2 small text-muted" style="max-width:320px;">{{ \Illuminate\Support\Str::limit($p->address, 75) }}</td>
+                        <td class="px-4 py-2 small">@include('components.crud-actions', ['record' => $p, 'routePrefix' => 'pops'])</td>
                     </tr>
                     @empty
                     <tr>

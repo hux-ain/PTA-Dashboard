@@ -29,10 +29,6 @@
                 <i class="fa-solid fa-circle-exclamation"></i> <span>Complaint Report</span>
             </a>
 
-            <a href="{{ route('faults.index') }}" class="nav-link {{ request()->is('faults*') && !request()->is('faultscleared*') ? 'active' : '' }}" data-title="Faults Reported">
-                <i class="fa-solid fa-triangle-exclamation"></i> <span>Faults Reported</span>
-            </a>
-
             <a href="{{ route('faultscleared.index') }}" class="nav-link {{ request()->is('faultscleared*') ? 'active' : '' }}" data-title="Faults Cleared">
                 <i class="fa-solid fa-circle-check"></i> <span>Faults Cleared</span>
             </a>

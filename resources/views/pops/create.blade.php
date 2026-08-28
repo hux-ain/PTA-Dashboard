@@ -17,20 +17,21 @@
         <div class="col-lg-8">
             <div class="card shadow-sm border-0 rounded-4">
                 <div class="card-body p-4">
-                    <form action="{{ route('pops.store') }}" method="POST">
+                    <form action="{{ isset($record) ? route('pops.update', $record->id) : route('pops.store') }}" method="POST">
                         @csrf
+                        @isset($record) @method('PUT') @endisset
 
                         <div class="mb-3">
                             <label for="serial_no" class="form-label fw-semibold">Serial No</label>
                             <input type="text" class="form-control @error('serial_no') is-invalid @enderror"
-                                   id="serial_no" name="serial_no" value="{{ old('serial_no') }}">
+                                   id="serial_no" name="serial_no" value="{{ old('serial_no', $record->serial_no ?? '') }}">
                             @error('serial_no')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                         </div>
 
                         <div class="mb-3">
                             <label for="pop_name" class="form-label fw-semibold">POP Name <span class="text-danger">*</span></label>
                             <input type="text" class="form-control @error('pop_name') is-invalid @enderror"
-                                   id="pop_name" name="pop_name" value="{{ old('pop_name') }}" required>
+                                   id="pop_name" name="pop_name" value="{{ old('pop_name', $record->pop_name ?? '') }}" required>
                             @error('pop_name')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                         </div>
 
@@ -38,13 +39,13 @@
                             <div class="col-md-6 mb-3">
                                 <label for="city" class="form-label fw-semibold">City <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control @error('city') is-invalid @enderror"
-                                       id="city" name="city" value="{{ old('city') }}" required>
+                                       id="city" name="city" value="{{ old('city', $record->city ?? '') }}" required>
                                 @error('city')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="gps_coordinates" class="form-label fw-semibold">GPS Coordinates</label>
                                 <input type="text" class="form-control @error('gps_coordinates') is-invalid @enderror"
-                                       id="gps_coordinates" name="gps_coordinates" value="{{ old('gps_coordinates') }}" placeholder="e.g., 24.8607, 67.0011">
+                                       id="gps_coordinates" name="gps_coordinates" value="{{ old('gps_coordinates', $record->gps_coordinates ?? '') }}" placeholder="e.g., 24.8607, 67.0011">
                                 @error('gps_coordinates')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                             </div>
                         </div>
@@ -52,14 +53,14 @@
                         <div class="mb-3">
                             <label for="address" class="form-label fw-semibold">Address</label>
                             <textarea class="form-control @error('address') is-invalid @enderror"
-                                      id="address" name="address" rows="3">{{ old('address') }}</textarea>
+                                      id="address" name="address" rows="3">{{ old('address', $record->address ?? '') }}</textarea>
                             @error('address')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                         </div>
 
                         <div class="mb-3">
                             <label for="own_colocated" class="form-label fw-semibold">Own / Co-located</label>
                             <input type="text" class="form-control @error('own_colocated') is-invalid @enderror"
-                                   id="own_colocated" name="own_colocated" value="{{ old('own_colocated') }}" placeholder="e.g., Own, Co-located">
+                                   id="own_colocated" name="own_colocated" value="{{ old('own_colocated', $record->own_colocated ?? '') }}" placeholder="e.g., Own, Co-located">
                             @error('own_colocated')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                         </div>
 

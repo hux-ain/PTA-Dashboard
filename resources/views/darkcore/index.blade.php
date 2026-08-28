@@ -151,6 +151,7 @@
                         <th class="px-4 py-3 text-uppercase small text-muted">Provider</th>
                         <th class="px-4 py-3 text-uppercase small text-muted">Service Type</th>
                         <th class="px-4 py-3 text-uppercase small text-muted">Own / Lease</th>
+                        <th class="px-4 py-3 text-uppercase small text-muted">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -171,6 +172,7 @@
                             <span class="badge bg-info text-dark rounded-pill px-3 py-1">{{ $d->own_or_lease }}</span>
                             @endif
                         </td>
+                        <td class="px-4 py-2 small">@include('components.crud-actions', ['record' => $d, 'routePrefix' => 'darkcore'])</td>
                     </tr>
                     @empty
                     <tr>

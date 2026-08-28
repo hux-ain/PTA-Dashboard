@@ -17,22 +17,30 @@
         <div class="col-lg-8">
             <div class="card shadow-sm border-0 rounded-4">
                 <div class="card-body p-4">
-                    <form action="{{ route('subscribers.store') }}" method="POST">
+                    <form action="{{ isset($record) ? route('subscribers.update', $record->id) : route('subscribers.store') }}" method="POST">
                         @csrf
+                        @isset($record) @method('PUT') @endisset
 
                         <div class="mb-3">
                             <label for="company_name" class="form-label fw-semibold">Company Name <span class="text-danger">*</span></label>
                             <input type="text" class="form-control @error('company_name') is-invalid @enderror" 
-                                   id="company_name" name="company_name" value="{{ old('company_name') }}" required>
+                                   id="company_name" name="company_name" value="{{ old('company_name', $record->company_name ?? '') }}" required>
                             @error('company_name')
                                 <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="mb-3">
+                            <label for="district" class="form-label fw-semibold">District</label>
+                            <input type="text" class="form-control @error('district') is-invalid @enderror"
+                                   id="district" name="district" value="{{ old('district', $record->district ?? '') }}">
+                            @error('district')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
+                        </div>
+
+                        <div class="mb-3">
                             <label for="ntn_cnic" class="form-label fw-semibold">NTN / CNIC</label>
                             <input type="text" class="form-control @error('ntn_cnic') is-invalid @enderror" 
-                                   id="ntn_cnic" name="ntn_cnic" value="{{ old('ntn_cnic') }}" placeholder="e.g., 1234567-8">
+                                   id="ntn_cnic" name="ntn_cnic" value="{{ old('ntn_cnic', $record->ntn_cnic ?? '') }}" placeholder="e.g., 1234567-8">
                             @error('ntn_cnic')
                                 <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror
@@ -41,7 +49,7 @@
                         <div class="mb-3">
                             <label for="address" class="form-label fw-semibold">Address</label>
                             <textarea class="form-control @error('address') is-invalid @enderror" 
-                                      id="address" name="address" rows="3">{{ old('address') }}</textarea>
+                                      id="address" name="address" rows="3">{{ old('address', $record->address ?? '') }}</textarea>
                             @error('address')
                                 <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror
@@ -50,7 +58,7 @@
                         <div class="mb-3">
                             <label for="contact" class="form-label fw-semibold">Contact Number</label>
                             <input type="text" class="form-control @error('contact') is-invalid @enderror" 
-                                   id="contact" name="contact" value="{{ old('contact') }}" placeholder="e.g., +92-21-12345678">
+                                   id="contact" name="contact" value="{{ old('contact', $record->contact ?? '') }}" placeholder="e.g., +92-21-12345678">
                             @error('contact')
                                 <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror
@@ -59,7 +67,7 @@
                         <div class="mb-3">
                             <label for="package" class="form-label fw-semibold">Package</label>
                             <input type="text" class="form-control @error('package') is-invalid @enderror" 
-                                   id="package" name="package" value="{{ old('package') }}" placeholder="e.g., Premium, Standard">
+                                   id="package" name="package" value="{{ old('package', $record->package ?? '') }}" placeholder="e.g., Premium, Standard">
                             @error('package')
                                 <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror

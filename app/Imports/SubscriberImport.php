@@ -44,10 +44,11 @@ class SubscriberImport implements ToModel, WithStartRow, WithBatchInserts, WithC
     {
         $serialNo    = $this->cleanValue($row[0] ?? null);
         $companyName = $this->cleanValue($row[1] ?? null);
-        $ntnCnic     = $this->cleanValue($row[2] ?? null);
-        $address     = $this->cleanValue($row[3] ?? null);
-        $contact     = $this->cleanValue($row[4] ?? null);
-        $package     = $this->cleanValue($row[5] ?? null);
+        $district    = $this->cleanValue($row[2] ?? null);
+        $ntnCnic     = $this->cleanValue($row[3] ?? null);
+        $address     = $this->cleanValue($row[4] ?? null);
+        $contact     = $this->cleanValue($row[5] ?? null);
+        $package     = $this->cleanValue($row[6] ?? null);
 
         if (empty($companyName)) {
             return null;
@@ -60,6 +61,7 @@ class SubscriberImport implements ToModel, WithStartRow, WithBatchInserts, WithC
             ],
             [
                 'serial_no'    => $serialNo,
+                'district'     => $district,
                 'address'      => $address,
                 'contact'      => $contact,
                 'package'      => $package,

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Complaint;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ComplaintsController extends Controller
@@ -126,5 +127,100 @@ class ComplaintsController extends Controller
         } catch (\Exception $e) {
             return back()->withErrors(['error' => 'Failed to add complaint: ' . $e->getMessage()]);
         }
+    }
+
+    public function edit(Complaint $complaint)
+    {
+        $this->ensureAdmin();
+        $pageTitle = 'Edit Complaint';
+
+        return view('complaints.create', compact('pageTitle', 'complaint'));
+    }
+
+    public function update(Request $request, Complaint $complaint)
+    {
+        $this->ensureAdmin();
+        $validated = $this->validateComplaint($request);
+
+        if (strtolower((string) ($validated['status'] ?? '')) === 'closed') {
+            $validated['closed_at'] = $validated['closed_at'] ?? now();
+            $validated['aging_downtime'] = $complaint->opened_at
+                ? $this->formatDuration($complaint->opened_at, Carbon::parse($validated['closed_at']))
+                : null;
+        } else {
+            $validated['closed_at'] = null;
+            $validated['aging_downtime'] = null;
+        }
+
+        $complaint->update($validated);
+
+        return redirect()->route('complaints.index')->with('success', 'Complaint updated successfully!');
+    }
+
+    public function close(Complaint $complaint)
+    {
+        $this->ensureAdmin();
+
+        $closedAt = now();
+        $complaint->update([
+            'status' => 'Closed',
+            'closed_at' => $closedAt,
+            'aging_downtime' => $complaint->opened_at
+                ? $this->formatDuration($complaint->opened_at, $closedAt)
+                : null,
+        ]);
+
+        return redirect()->route('complaints.index')->with('success', 'Complaint closed successfully!');
+    }
+
+    public function destroy(Complaint $complaint)
+    {
+        if (auth()->user()->role !== 'super_admin') {
+            abort(403, 'Unauthorized - Only Super Admin can delete complaints');
+        }
+
+        $complaint->delete();
+
+        return redirect()->route('complaints.index')->with('success', 'Complaint deleted successfully!');
+    }
+
+    private function ensureAdmin(): void
+    {
+        if (!in_array(auth()->user()->role, ['Admin', 'super_admin'])) {
+            abort(403, 'Unauthorized - Only Admin can edit or close complaints');
+        }
+    }
+
+    private function validateComplaint(Request $request): array
+    {
+        return $request->validate([
+            'customer_name' => 'required|string|max:255',
+            'opened_at' => 'required|date',
+            'issue' => 'required|string',
+            'complaint_channel' => 'nullable|string|max:100',
+            'main_city' => 'nullable|string|max:100',
+            'closed_at' => 'nullable|date',
+            'status' => 'nullable|string|max:50',
+            'affect' => 'nullable|string|max:100',
+            'owner' => 'nullable|string|max:100',
+            'aging_downtime' => 'nullable|string|max:100',
+            'rfo' => 'nullable|string',
+            'rca' => 'nullable|string',
+        ]);
+    }
+
+    private function formatDuration(Carbon $openedAt, Carbon $closedAt): string
+    {
+        $minutes = max(0, $openedAt->diffInMinutes($closedAt));
+        $days = intdiv($minutes, 1440);
+        $hours = intdiv($minutes % 1440, 60);
+        $remainingMinutes = $minutes % 60;
+        $parts = [];
+
+        if ($days) $parts[] = $days . ' ' . str('day')->plural($days);
+        if ($hours) $parts[] = $hours . ' ' . str('hour')->plural($hours);
+        if ($remainingMinutes || !$parts) $parts[] = $remainingMinutes . ' ' . str('minute')->plural($remainingMinutes);
+
+        return implode(' ', $parts);
     }
 }

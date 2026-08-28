@@ -125,7 +125,7 @@
                                 <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-outline-primary" title="Edit">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
-                                @if($user->id !== auth()->id())
+                                @if(auth()->user()->role === 'super_admin' && $user->id !== auth()->id())
                                 <form method="POST" action="{{ route('users.destroy', $user->id) }}" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this user?');">
                                     @csrf
                                     @method('DELETE')

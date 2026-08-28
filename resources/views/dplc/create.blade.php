@@ -17,13 +17,14 @@
         <div class="col-lg-8">
             <div class="card shadow-sm border-0 rounded-4">
                 <div class="card-body p-4">
-                    <form action="{{ route('dplc.store') }}" method="POST">
+                    <form action="{{ isset($record) ? route('dplc.update', $record->id) : route('dplc.store') }}" method="POST">
                         @csrf
+                        @isset($record) @method('PUT') @endisset
 
                         <div class="mb-3">
                             <label for="serial_no" class="form-label fw-semibold">Serial No</label>
                             <input type="text" class="form-control @error('serial_no') is-invalid @enderror"
-                                   id="serial_no" name="serial_no" value="{{ old('serial_no') }}">
+                                   id="serial_no" name="serial_no" value="{{ old('serial_no', $record->serial_no ?? '') }}">
                             @error('serial_no')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                         </div>
 
@@ -31,13 +32,13 @@
                             <div class="col-md-6 mb-3">
                                 <label for="point_a_gps" class="form-label fw-semibold">Point A GPS</label>
                                 <input type="text" class="form-control @error('point_a_gps') is-invalid @enderror"
-                                       id="point_a_gps" name="point_a_gps" value="{{ old('point_a_gps') }}" placeholder="e.g., 24.8607, 67.0011">
+                                       id="point_a_gps" name="point_a_gps" value="{{ old('point_a_gps', $record->point_a_gps ?? '') }}" placeholder="e.g., 24.8607, 67.0011">
                                 @error('point_a_gps')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="point_b_gps" class="form-label fw-semibold">Point B GPS</label>
                                 <input type="text" class="form-control @error('point_b_gps') is-invalid @enderror"
-                                       id="point_b_gps" name="point_b_gps" value="{{ old('point_b_gps') }}" placeholder="e.g., 24.8607, 67.0011">
+                                       id="point_b_gps" name="point_b_gps" value="{{ old('point_b_gps', $record->point_b_gps ?? '') }}" placeholder="e.g., 24.8607, 67.0011">
                                 @error('point_b_gps')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                             </div>
                         </div>
@@ -45,14 +46,14 @@
                         <div class="mb-3">
                             <label for="service_provider" class="form-label fw-semibold">Service Provider <span class="text-danger">*</span></label>
                             <input type="text" class="form-control @error('service_provider') is-invalid @enderror"
-                                   id="service_provider" name="service_provider" value="{{ old('service_provider') }}" required>
+                                   id="service_provider" name="service_provider" value="{{ old('service_provider', $record->service_provider ?? '') }}" required>
                             @error('service_provider')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                         </div>
 
                         <div class="mb-3">
                             <label for="total_bandwidth_acquired" class="form-label fw-semibold">Total Bandwidth Acquired</label>
                             <input type="text" class="form-control @error('total_bandwidth_acquired') is-invalid @enderror"
-                                   id="total_bandwidth_acquired" name="total_bandwidth_acquired" value="{{ old('total_bandwidth_acquired') }}" placeholder="e.g., 10 Mbps">
+                                   id="total_bandwidth_acquired" name="total_bandwidth_acquired" value="{{ old('total_bandwidth_acquired', $record->total_bandwidth_acquired ?? '') }}" placeholder="e.g., 10 Mbps">
                             @error('total_bandwidth_acquired')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                         </div>
 

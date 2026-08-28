@@ -3,11 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\NocPopLocation;
+use App\Http\Controllers\Concerns\ManagesCrud;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class PopLocationsController extends Controller
 {
+    use ManagesCrud;
+    protected string $crudModel = NocPopLocation::class;
+    protected string $crudView = 'pops.create';
+    protected string $crudRoute = 'pops.index';
+    protected string $crudLabel = 'POP Location';
+    protected array $crudRules = ['serial_no' => 'nullable|string|max:100', 'pop_name' => 'required|string|max:255', 'city' => 'required|string|max:100', 'gps_coordinates' => 'nullable|string|max:100', 'address' => 'nullable|string', 'own_colocated' => 'nullable|string|max:50'];
     public function __construct()
     {
         $this->middleware('auth');

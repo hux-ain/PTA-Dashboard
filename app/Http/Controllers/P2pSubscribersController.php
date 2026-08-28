@@ -3,10 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\P2pSubscriber;
+use App\Http\Controllers\Concerns\ManagesCrud;
 use Illuminate\Http\Request;
 
 class P2pSubscribersController extends Controller
 {
+    use ManagesCrud;
+    protected string $crudModel = P2pSubscriber::class;
+    protected string $crudView = 'p2p.create';
+    protected string $crudRoute = 'p2p.index';
+    protected string $crudLabel = 'P2P Subscriber';
+    protected array $crudRules = ['serial_no' => 'nullable|string|max:100', 'link_name' => 'required|string|max:255', 'station_a' => 'required|string|max:100', 'station_b' => 'required|string|max:100', 'status' => 'nullable|string|max:50', 'ownership' => 'nullable|string|max:100', 'frequency' => 'nullable|string|max:100'];
     public function __construct()
     {
         $this->middleware('auth');

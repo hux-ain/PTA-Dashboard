@@ -152,6 +152,7 @@
                         <th class="px-4 py-3 text-uppercase small text-muted">Affect</th>
                         <th class="px-4 py-3 text-uppercase small text-muted">Aging</th>
                         <th class="px-4 py-3 text-uppercase small text-muted">RFO</th>
+                        <th class="px-4 py-3 text-uppercase small text-muted">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -178,6 +179,7 @@
                         </td>
                         <td class="px-4 py-2 small fw-medium">{{ $f->aging_downtime }}</td>
                         <td class="px-4 py-2 small text-muted" style="max-width:220px;">{{ \Illuminate\Support\Str::limit($f->rfo ?? '—', 50) }}</td>
+                        <td class="px-4 py-2 small">@include('components.crud-actions', ['record' => $f, 'routePrefix' => 'faults'])</td>
                     </tr>
                     @empty
                     <tr>

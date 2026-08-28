@@ -3,11 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Subscriber;
+use App\Http\Controllers\Concerns\ManagesCrud;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class SubscribersController extends Controller
 {
+    use ManagesCrud;
+    protected string $crudModel = Subscriber::class;
+    protected string $crudView = 'subscribers.create';
+    protected string $crudRoute = 'subscribers.index';
+    protected string $crudLabel = 'Subscriber';
+    protected array $crudRules = ['company_name' => 'required|string|max:255', 'district' => 'nullable|string|max:100', 'ntn_cnic' => 'nullable|string|max:50', 'address' => 'nullable|string', 'contact' => 'nullable|string|max:20', 'package' => 'nullable|string|max:100'];
     public function __construct()
     {
         $this->middleware('auth');
@@ -25,6 +32,7 @@ class SubscribersController extends Controller
 
         $search = $request->input('search');
         $filterPackage = $request->input('package');
+        $filterDistrict = $request->input('district');
 
         $query = Subscriber::query();
 
@@ -32,6 +40,7 @@ class SubscribersController extends Controller
             $query->where(function ($q) use ($search) {
                 $q->where('company_name', 'LIKE', "%{$search}%")
                   ->orWhere('ntn_cnic', 'LIKE', "%{$search}%")
+                  ->orWhere('district', 'LIKE', "%{$search}%")
                   ->orWhere('contact', 'LIKE', "%{$search}%")
                   ->orWhere('package', 'LIKE', "%{$search}%");
             });
@@ -39,6 +48,10 @@ class SubscribersController extends Controller
 
         if ($filterPackage) {
             $query->where('package', $filterPackage);
+        }
+
+        if ($filterDistrict) {
+            $query->where('district', $filterDistrict);
         }
 
         $subscribers = $query->paginate(25)->withQueryString();
@@ -49,6 +62,13 @@ class SubscribersController extends Controller
             ->distinct()
             ->orderBy('package')
             ->pluck('package');
+
+        $districts = Subscriber::select('district')
+            ->whereNotNull('district')
+            ->where('district', '!=', '')
+            ->distinct()
+            ->orderBy('district')
+            ->pluck('district');
 
         $totalSubscribers = Subscriber::count();
 
@@ -67,6 +87,8 @@ class SubscribersController extends Controller
             'packages',
             'search',
             'filterPackage',
+            'districts',
+            'filterDistrict',
             'totalSubscribers',
             'topPackage',
             'companiesByCount'
@@ -83,6 +105,7 @@ class SubscribersController extends Controller
     {
         $validated = $request->validate([
             'company_name' => 'required|string|max:255',
+            'district' => 'nullable|string|max:100',
             'ntn_cnic' => 'nullable|string|max:50',
             'address' => 'nullable|string',
             'contact' => 'nullable|string|max:20',

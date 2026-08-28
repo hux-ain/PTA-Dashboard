@@ -140,6 +140,10 @@ class UserManagementController extends Controller
     // Delete user
     public function destroy(User $user)
     {
+        if (auth()->user()->role !== 'super_admin') {
+            abort(403, 'Unauthorized - Only Super Admin can delete users');
+        }
+
         // Prevent deleting the last admin
         $adminCount = User::where('role', 'Admin')->count();
         if ($user->role === 'Admin' && $adminCount <= 1) {

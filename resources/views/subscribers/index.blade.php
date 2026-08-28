@@ -118,6 +118,15 @@
                         @endforeach
                     </select>
                 </div>
+                <div style="min-width:200px;">
+                    <label class="form-label small fw-semibold text-muted mb-1">District</label>
+                    <select name="district" class="form-select">
+                        <option value="">All Districts</option>
+                        @foreach($districts as $district)
+                        <option value="{{ $district }}" {{ $filterDistrict == $district ? 'selected' : '' }}>{{ $district }}</option>
+                        @endforeach
+                    </select>
+                </div>
                 <a href="{{ route('subscribers.index') }}" class="btn btn-outline-secondary btn-sm">
                     <i class="fa-solid fa-rotate-left me-1"></i> Reset
                 </a>
@@ -130,10 +139,12 @@
                     <tr>
                         <th class="px-4 py-3 text-uppercase small text-muted">#</th>
                         <th class="px-4 py-3 text-uppercase small text-muted">Company Name</th>
+                        <th class="px-4 py-3 text-uppercase small text-muted">District</th>
                         <th class="px-4 py-3 text-uppercase small text-muted">NTN / CNIC</th>
                         <th class="px-4 py-3 text-uppercase small text-muted">Contact</th>
                         <th class="px-4 py-3 text-uppercase small text-muted">Package</th>
                         <th class="px-4 py-3 text-uppercase small text-muted">Address</th>
+                        <th class="px-4 py-3 text-uppercase small text-muted">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -141,16 +152,18 @@
                     <tr>
                         <td class="px-4 py-2 small">{{ $subscribers->firstItem() + $i }}</td>
                         <td class="px-4 py-2 small fw-semibold text-dark">{{ $s->company_name }}</td>
+                        <td class="px-4 py-2 small">{{ $s->district ?? '—' }}</td>
                         <td class="px-4 py-2 small">{{ $s->ntn_cnic }}</td>
                         <td class="px-4 py-2 small">{{ $s->contact }}</td>
                         <td class="px-4 py-2 small">
                             <span class="badge rounded-pill px-3 py-1" style="background:rgba(235,180,30,0.18);color:#966f05;">{{ $s->package }}</span>
                         </td>
                         <td class="px-4 py-2 small text-muted" style="max-width:320px;">{{ \Illuminate\Support\Str::limit($s->address, 70) }}</td>
+                        <td class="px-4 py-2 small">@include('components.crud-actions', ['record' => $s, 'routePrefix' => 'subscribers'])</td>
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="6" class="text-center py-5 text-muted">
+                        <td colspan="8" class="text-center py-5 text-muted">
                             <i class="fa-solid fa-inbox fs-3 mb-2 d-block opacity-50"></i>
                             No Subscribers CIR data found. Import data from the <a href="{{ route('imports.index') }}">Data Import page</a>.
                         </td>

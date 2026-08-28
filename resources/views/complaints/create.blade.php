@@ -17,13 +17,14 @@
         <div class="col-lg-8">
             <div class="card shadow-sm border-0 rounded-4">
                 <div class="card-body p-4">
-                    <form action="{{ route('complaints.store') }}" method="POST">
+                    <form action="{{ isset($complaint) ? route('complaints.update', $complaint) : route('complaints.store') }}" method="POST">
                         @csrf
+                        @isset($complaint) @method('PUT') @endisset
 
                         <div class="mb-3">
                             <label for="customer_name" class="form-label fw-semibold">Customer Name <span class="text-danger">*</span></label>
                             <input type="text" class="form-control @error('customer_name') is-invalid @enderror"
-                                   id="customer_name" name="customer_name" value="{{ old('customer_name') }}" required>
+                                       id="customer_name" name="customer_name" value="{{ old('customer_name', $complaint->customer_name ?? '') }}" required>
                             @error('customer_name')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                         </div>
 
@@ -31,13 +32,13 @@
                             <div class="col-md-6 mb-3">
                                 <label for="opened_at" class="form-label fw-semibold">Opened At <span class="text-danger">*</span></label>
                                 <input type="datetime-local" class="form-control @error('opened_at') is-invalid @enderror"
-                                       id="opened_at" name="opened_at" value="{{ old('opened_at') }}" required>
+                                       id="opened_at" name="opened_at" value="{{ old('opened_at', isset($complaint) && $complaint->opened_at ? $complaint->opened_at->format('Y-m-d\\TH:i') : '') }}" required>
                                 @error('opened_at')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="closed_at" class="form-label fw-semibold">Closed At</label>
                                 <input type="datetime-local" class="form-control @error('closed_at') is-invalid @enderror"
-                                       id="closed_at" name="closed_at" value="{{ old('closed_at') }}">
+                                       id="closed_at" name="closed_at" value="{{ old('closed_at', isset($complaint) && $complaint->closed_at ? $complaint->closed_at->format('Y-m-d\\TH:i') : '') }}">
                                 @error('closed_at')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                             </div>
                         </div>
@@ -45,7 +46,7 @@
                         <div class="mb-3">
                             <label for="issue" class="form-label fw-semibold">Issue <span class="text-danger">*</span></label>
                             <textarea class="form-control @error('issue') is-invalid @enderror"
-                                      id="issue" name="issue" rows="2" required>{{ old('issue') }}</textarea>
+                                      id="issue" name="issue" rows="2" required>{{ old('issue', $complaint->issue ?? '') }}</textarea>
                             @error('issue')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                         </div>
 
@@ -53,13 +54,13 @@
                             <div class="col-md-6 mb-3">
                                 <label for="complaint_channel" class="form-label fw-semibold">Channel</label>
                                 <input type="text" class="form-control @error('complaint_channel') is-invalid @enderror"
-                                       id="complaint_channel" name="complaint_channel" value="{{ old('complaint_channel') }}" placeholder="e.g., Phone, Email">
+                                       id="complaint_channel" name="complaint_channel" value="{{ old('complaint_channel', $complaint->complaint_channel ?? '') }}" placeholder="e.g., Phone, Email">
                                 @error('complaint_channel')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="main_city" class="form-label fw-semibold">City</label>
                                 <input type="text" class="form-control @error('main_city') is-invalid @enderror"
-                                       id="main_city" name="main_city" value="{{ old('main_city') }}">
+                                       id="main_city" name="main_city" value="{{ old('main_city', $complaint->main_city ?? '') }}">
                                 @error('main_city')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                             </div>
                         </div>
@@ -68,13 +69,13 @@
                             <div class="col-md-6 mb-3">
                                 <label for="status" class="form-label fw-semibold">Status</label>
                                 <input type="text" class="form-control @error('status') is-invalid @enderror"
-                                       id="status" name="status" value="{{ old('status') }}" placeholder="e.g., Open, Closed">
+                                       id="status" name="status" value="{{ old('status', $complaint->status ?? 'Open') }}" placeholder="e.g., Open, Closed">
                                 @error('status')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="affect" class="form-label fw-semibold">Affect</label>
                                 <input type="text" class="form-control @error('affect') is-invalid @enderror"
-                                       id="affect" name="affect" value="{{ old('affect') }}" placeholder="e.g., Service Affecting">
+                                       id="affect" name="affect" value="{{ old('affect', $complaint->affect ?? '') }}" placeholder="e.g., Service Affecting">
                                 @error('affect')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                             </div>
                         </div>
@@ -83,13 +84,13 @@
                             <div class="col-md-6 mb-3">
                                 <label for="owner" class="form-label fw-semibold">Owner</label>
                                 <input type="text" class="form-control @error('owner') is-invalid @enderror"
-                                       id="owner" name="owner" value="{{ old('owner') }}">
+                                       id="owner" name="owner" value="{{ old('owner', $complaint->owner ?? '') }}">
                                 @error('owner')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="aging_downtime" class="form-label fw-semibold">Aging / Downtime</label>
                                 <input type="text" class="form-control @error('aging_downtime') is-invalid @enderror"
-                                       id="aging_downtime" name="aging_downtime" value="{{ old('aging_downtime') }}">
+                                       id="aging_downtime" name="aging_downtime" value="{{ old('aging_downtime', $complaint->aging_downtime ?? '') }}">
                                 @error('aging_downtime')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                             </div>
                         </div>
@@ -97,20 +98,20 @@
                         <div class="mb-3">
                             <label for="rfo" class="form-label fw-semibold">RFO (Reason for Outage)</label>
                             <textarea class="form-control @error('rfo') is-invalid @enderror"
-                                      id="rfo" name="rfo" rows="2">{{ old('rfo') }}</textarea>
+                                      id="rfo" name="rfo" rows="2">{{ old('rfo', $complaint->rfo ?? '') }}</textarea>
                             @error('rfo')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                         </div>
 
                         <div class="mb-3">
                             <label for="rca" class="form-label fw-semibold">RCA (Root Cause Analysis)</label>
                             <textarea class="form-control @error('rca') is-invalid @enderror"
-                                      id="rca" name="rca" rows="2">{{ old('rca') }}</textarea>
+                                      id="rca" name="rca" rows="2">{{ old('rca', $complaint->rca ?? '') }}</textarea>
                             @error('rca')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                         </div>
 
                         <div class="d-flex gap-2">
                             <button type="submit" class="btn btn-primary fw-semibold">
-                                <i class="fa-solid fa-check me-2"></i>Save Complaint
+                                <i class="fa-solid fa-check me-2"></i>{{ isset($complaint) ? 'Update Complaint' : 'Save Complaint' }}
                             </button>
                             <a href="{{ route('complaints.index') }}" class="btn btn-secondary">
                                 <i class="fa-solid fa-times me-2"></i>Cancel

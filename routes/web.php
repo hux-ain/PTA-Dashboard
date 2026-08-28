@@ -34,41 +34,66 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/subscribers', [SubscribersController::class, 'index'])->name('subscribers.index');
     Route::get('/subscribers/create', [SubscribersController::class, 'create'])->name('subscribers.create');
     Route::post('/subscribers', [SubscribersController::class, 'store'])->name('subscribers.store');
+    Route::get('/subscribers/{subscriber}/edit', [SubscribersController::class, 'edit'])->name('subscribers.edit');
+    Route::put('/subscribers/{subscriber}', [SubscribersController::class, 'update'])->name('subscribers.update');
+    Route::delete('/subscribers/{subscriber}', [SubscribersController::class, 'destroy'])->name('subscribers.destroy');
 
     // P2P
     Route::get('/p2p', [P2pSubscribersController::class, 'index'])->name('p2p.index');
     Route::get('/p2p/create', [P2pSubscribersController::class, 'create'])->name('p2p.create');
     Route::post('/p2p', [P2pSubscribersController::class, 'store'])->name('p2p.store');
+    Route::get('/p2p/{p2pSubscriber}/edit', [P2pSubscribersController::class, 'edit'])->name('p2p.edit');
+    Route::put('/p2p/{p2pSubscriber}', [P2pSubscribersController::class, 'update'])->name('p2p.update');
+    Route::delete('/p2p/{p2pSubscriber}', [P2pSubscribersController::class, 'destroy'])->name('p2p.destroy');
 
     // Complaints
     Route::get('/complaints', [ComplaintsController::class, 'index'])->name('complaints.index');
     Route::get('/complaints/create', [ComplaintsController::class, 'create'])->name('complaints.create');
     Route::post('/complaints', [ComplaintsController::class, 'store'])->name('complaints.store');
+    Route::get('/complaints/{complaint}/edit', [ComplaintsController::class, 'edit'])->name('complaints.edit');
+    Route::put('/complaints/{complaint}', [ComplaintsController::class, 'update'])->name('complaints.update');
+    Route::patch('/complaints/{complaint}/close', [ComplaintsController::class, 'close'])->name('complaints.close');
+    Route::delete('/complaints/{complaint}', [ComplaintsController::class, 'destroy'])->name('complaints.destroy');
 
     // Faults
     Route::get('/faults', [FaultsController::class, 'index'])->name('faults.index');
     Route::get('/faults/create', [FaultsController::class, 'create'])->name('faults.create');
     Route::post('/faults', [FaultsController::class, 'store'])->name('faults.store');
+    Route::get('/faults/{fault}/edit', [FaultsController::class, 'edit'])->name('faults.edit');
+    Route::put('/faults/{fault}', [FaultsController::class, 'update'])->name('faults.update');
+    Route::delete('/faults/{fault}', [FaultsController::class, 'destroy'])->name('faults.destroy');
 
     // Faults Cleared
     Route::get('/faultscleared', [FaultsClearedController::class, 'index'])->name('faultscleared.index');
     Route::get('/faultscleared/create', [FaultsClearedController::class, 'create'])->name('faultscleared.create');
     Route::post('/faultscleared', [FaultsClearedController::class, 'store'])->name('faultscleared.store');
+    Route::get('/faultscleared/{fault}/edit', [FaultsClearedController::class, 'edit'])->name('faultscleared.edit');
+    Route::put('/faultscleared/{fault}', [FaultsClearedController::class, 'update'])->name('faultscleared.update');
+    Route::delete('/faultscleared/{fault}', [FaultsClearedController::class, 'destroy'])->name('faultscleared.destroy');
 
     // Dark Core
     Route::get('/darkcore', [DarkCoreController::class, 'index'])->name('darkcore.index');
     Route::get('/darkcore/create', [DarkCoreController::class, 'create'])->name('darkcore.create');
     Route::post('/darkcore', [DarkCoreController::class, 'store'])->name('darkcore.store');
+    Route::get('/darkcore/{darkcore}/edit', [DarkCoreController::class, 'edit'])->name('darkcore.edit');
+    Route::put('/darkcore/{darkcore}', [DarkCoreController::class, 'update'])->name('darkcore.update');
+    Route::delete('/darkcore/{darkcore}', [DarkCoreController::class, 'destroy'])->name('darkcore.destroy');
 
     // DPLC
     Route::get('/dplc', [DplcController::class, 'index'])->name('dplc.index');
     Route::get('/dplc/create', [DplcController::class, 'create'])->name('dplc.create');
     Route::post('/dplc', [DplcController::class, 'store'])->name('dplc.store');
+    Route::get('/dplc/{dplc}/edit', [DplcController::class, 'edit'])->name('dplc.edit');
+    Route::put('/dplc/{dplc}', [DplcController::class, 'update'])->name('dplc.update');
+    Route::delete('/dplc/{dplc}', [DplcController::class, 'destroy'])->name('dplc.destroy');
 
     // POPs
     Route::get('/pops', [PopLocationsController::class, 'index'])->name('pops.index');
     Route::get('/pops/create', [PopLocationsController::class, 'create'])->name('pops.create');
     Route::post('/pops', [PopLocationsController::class, 'store'])->name('pops.store');
+    Route::get('/pops/{pop}/edit', [PopLocationsController::class, 'edit'])->name('pops.edit');
+    Route::put('/pops/{pop}', [PopLocationsController::class, 'update'])->name('pops.update');
+    Route::delete('/pops/{pop}', [PopLocationsController::class, 'destroy'])->name('pops.destroy');
 
     Route::get('/imports', [ImportController::class, 'index'])->name('imports.index');
 

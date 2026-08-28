@@ -3,11 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\DplcDetail;
+use App\Http\Controllers\Concerns\ManagesCrud;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class DplcController extends Controller
 {
+    use ManagesCrud;
+    protected string $crudModel = DplcDetail::class;
+    protected string $crudView = 'dplc.create';
+    protected string $crudRoute = 'dplc.index';
+    protected string $crudLabel = 'DPLC Detail';
+    protected array $crudRules = ['serial_no' => 'nullable|string|max:100', 'point_a_gps' => 'nullable|string|max:100', 'point_b_gps' => 'nullable|string|max:100', 'service_provider' => 'required|string|max:100', 'total_bandwidth_acquired' => 'nullable|string|max:100'];
     public function __construct()
     {
         $this->middleware('auth');

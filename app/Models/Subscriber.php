@@ -14,6 +14,7 @@ class Subscriber extends Model
     protected $fillable = [
         'serial_no',
         'company_name',
+        'district',
         'ntn_cnic',
         'address',
         'contact',

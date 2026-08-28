@@ -3,11 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\FaultsCleared;
+use App\Http\Controllers\Concerns\ManagesCrud;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class FaultsClearedController extends Controller
 {
+    use ManagesCrud;
+    protected string $crudModel = FaultsCleared::class;
+    protected string $crudView = 'faultscleared.create';
+    protected string $crudRoute = 'faultscleared.index';
+    protected string $crudLabel = 'Cleared Fault';
+    protected array $crudRules = ['customer_name' => 'required|string|max:255', 'opened_at' => 'required|date', 'issue' => 'required|string', 'complaint_channel' => 'nullable|string|max:100', 'main_city' => 'nullable|string|max:100', 'closed_at' => 'nullable|date', 'status' => 'nullable|string|max:50', 'affect' => 'nullable|string|max:100', 'owner' => 'nullable|string|max:100', 'aging_downtime' => 'nullable|string|max:100', 'rfo' => 'nullable|string', 'rca' => 'nullable|string'];
     public function __construct()
     {
         $this->middleware('auth');

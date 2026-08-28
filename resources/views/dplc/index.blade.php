@@ -132,6 +132,7 @@
                         <th class="px-4 py-3 text-uppercase small text-muted">Point B (GPS)</th>
                         <th class="px-4 py-3 text-uppercase small text-muted">Service Provider</th>
                         <th class="px-4 py-3 text-uppercase small text-muted">Bandwidth Acquired</th>
+                        <th class="px-4 py-3 text-uppercase small text-muted">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -145,6 +146,7 @@
                             <span class="badge rounded-pill px-3 py-1" style="background:rgba(235,180,30,0.18);color:#966f05;">{{ $d->service_provider }}</span>
                         </td>
                         <td class="px-4 py-2 small fw-semibold text-primary">{{ $d->total_bandwidth_acquired }}</td>
+                        <td class="px-4 py-2 small">@include('components.crud-actions', ['record' => $d, 'routePrefix' => 'dplc'])</td>
                     </tr>
                     @empty
                     <tr>

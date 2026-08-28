@@ -152,6 +152,8 @@
                         <th class="px-4 py-3 text-uppercase small text-muted">Status</th>
                         <th class="px-4 py-3 text-uppercase small text-muted">Affect</th>
                         <th class="px-4 py-3 text-uppercase small text-muted">Owner</th>
+                        <th class="px-4 py-3 text-uppercase small text-muted">Aging</th>
+                        <th class="px-4 py-3 text-uppercase small text-muted">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -178,10 +180,28 @@
                             @endif
                         </td>
                         <td class="px-4 py-2 small text-muted">{{ $c->owner ?? '—' }}</td>
+                        <td class="px-4 py-2 small">{{ $c->aging_downtime ?? '—' }}</td>
+                        <td class="px-4 py-2 small">
+                            @if(in_array(auth()->user()->role, ['Admin', 'super_admin']))
+                                <a href="{{ route('complaints.edit', $c) }}" class="btn btn-sm btn-outline-primary" title="Edit complaint"><i class="fa-solid fa-pen"></i></a>
+                                @if(strtolower((string) $c->status) !== 'closed')
+                                <form action="{{ route('complaints.close', $c) }}" method="POST" class="d-inline">
+                                    @csrf @method('PATCH')
+                                    <button type="submit" class="btn btn-sm btn-outline-success" title="Close complaint" onclick="return confirm('Close this complaint?')"><i class="fa-solid fa-check"></i></button>
+                                </form>
+                                @endif
+                            @endif
+                            @if(auth()->user()->role === 'super_admin')
+                                <form action="{{ route('complaints.destroy', $c) }}" method="POST" class="d-inline">
+                                    @csrf @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete complaint" onclick="return confirm('Delete this complaint permanently?')"><i class="fa-solid fa-trash"></i></button>
+                                </form>
+                            @endif
+                        </td>
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="9" class="text-center py-5 text-muted">
+                        <td colspan="11" class="text-center py-5 text-muted">
                             <i class="fa-solid fa-inbox fs-3 mb-2 d-block opacity-50"></i>
                             No Complaints data found. Import from the <a href="{{ route('imports.index') }}">Data Import page</a>.
                         </td>
