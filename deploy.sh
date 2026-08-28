@@ -9,6 +9,7 @@ PHP_BIN="${PHP_BIN:-php}"
 COMPOSER_BIN="${COMPOSER_BIN:-composer}"
 NPM_BIN="${NPM_BIN:-npm}"
 GIT_BIN="${GIT_BIN:-git}"
+BUILD_FRONTEND="${BUILD_FRONTEND:-false}"
 
 maintenance_enabled=false
 cleanup() {
@@ -41,22 +42,6 @@ if ! command -v "$COMPOSER_BIN" >/dev/null 2>&1; then
     exit 1
 fi
 
-if ! command -v "$NPM_BIN" >/dev/null 2>&1; then
-    if command -v apt-get >/dev/null 2>&1; then
-        echo "npm was not found. Installing Node.js and npm..."
-        apt-get update
-        apt-get install -y nodejs npm
-    else
-        echo "Error: npm was not found and apt-get is unavailable. Install Node.js/npm or set NPM_BIN." >&2
-        exit 1
-    fi
-fi
-
-if ! command -v "$NPM_BIN" >/dev/null 2>&1; then
-    echo "Error: npm installation failed. Set NPM_BIN to the npm executable." >&2
-    exit 1
-fi
-
 echo "Putting application into maintenance mode..."
 "$PHP_BIN" artisan down --render="errors::503" --retry=60
 maintenance_enabled=true
@@ -67,13 +52,26 @@ echo "Installing PHP dependencies..."
 echo "Running database migrations..."
 "$PHP_BIN" artisan migrate --force
 
-echo "Installing frontend dependencies and building assets..."
-if [[ -f package-lock.json ]]; then
-    "$NPM_BIN" ci --no-audit --no-fund
+if [[ "$BUILD_FRONTEND" == true ]]; then
+    if ! command -v "$NPM_BIN" >/dev/null 2>&1; then
+        echo "Error: npm was not found. Install Node.js/npm or run without BUILD_FRONTEND=true." >&2
+        exit 1
+    fi
+
+    echo "Installing frontend dependencies and building assets..."
+    if [[ -f package-lock.json ]]; then
+        "$NPM_BIN" ci --no-audit --no-fund
+    else
+        "$NPM_BIN" install --no-audit --no-fund
+    fi
+    "$NPM_BIN" run build
 else
-    "$NPM_BIN" install --no-audit --no-fund
+    if [[ ! -f public/build/manifest.json ]]; then
+        echo "Error: public/build/manifest.json is missing. Run with BUILD_FRONTEND=true." >&2
+        exit 1
+    fi
+    echo "Skipping frontend build; using tracked public/build assets."
 fi
-"$NPM_BIN" run build
 
 echo "Linking public storage..."
 "$PHP_BIN" artisan storage:link || true
