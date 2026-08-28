@@ -8,6 +8,7 @@ cd "$APP_DIR"
 PHP_BIN="${PHP_BIN:-php}"
 COMPOSER_BIN="${COMPOSER_BIN:-composer}"
 NPM_BIN="${NPM_BIN:-npm}"
+GIT_BIN="${GIT_BIN:-git}"
 
 maintenance_enabled=false
 cleanup() {
@@ -16,6 +17,14 @@ cleanup() {
     fi
 }
 trap cleanup EXIT
+
+if ! command -v "$GIT_BIN" >/dev/null 2>&1; then
+    echo "Error: Git was not found. Install Git before deploying." >&2
+    exit 1
+fi
+
+echo "Pulling latest code from origin/main..."
+"$GIT_BIN" pull --ff-only origin main
 
 if [[ ! -f .env ]]; then
     echo "Error: .env file not found. Configure the production environment first." >&2
